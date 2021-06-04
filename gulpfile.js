@@ -12,12 +12,22 @@ function javascript() {
       'node_modules/jquery/dist/jquery.js',
       'node_modules/@popperjs/core/dist/umd/popper.js',
       'node_modules/bootstrap/dist/js/bootstrap.js',
+      'node_modules/ace-builds/src/ace.js',
+      'node_modules/ace-builds/src/mode-javascript.js',
       'src/js/index.js'
     ], { base: '.'})
     .pipe(babel())
     .pipe(terser())
     .pipe(concat('code.min.js'))
     .pipe(gulp.dest('static/js/'));
+}
+
+function ace_resources() {
+  return gulp.src([
+    'node_modules/ace-builds/src/worker-*.js'
+  ], {base: './'})
+  .pipe(flatten())
+  .pipe(gulp.dest('static/js/ace'));
 }
 
 function css() {
@@ -28,4 +38,4 @@ function css() {
     .pipe(gulp.dest('static/css/'));
 }
 
-exports.default = gulp.series(javascript, css);
+exports.default = gulp.series(javascript, ace_resources, css);

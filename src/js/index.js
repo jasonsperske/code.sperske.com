@@ -1,1 +1,1 @@
-console.log('Starting up code editor');
+ace.config.set("basePath", "/static/js/ace");
