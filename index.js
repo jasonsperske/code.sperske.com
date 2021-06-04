@@ -69,7 +69,7 @@ app.route('/:lang')
      if(lang.length === 1) {
        const data = lang[0];
        data.editor_source = fs.readFileSync(`data/${data.href}/${data.example_src_file}`);
-       res.render('code', data);
+       res.render('code/view', data);
      } else {
        res.redirect('/');
      }
