@@ -63,6 +63,17 @@ app.get('/', (req, res) => {
   });
 });
 
+app.get('/:lang/embed', (req, res) => {
+  const lang = supportedLanguages.filter((lang) => lang.href === req.params.lang);
+  if(lang.length === 1) {
+    const data = lang[0];
+    data.source = fs.readFileSync(`data/${data.href}/${data.example_src_file}`);
+    res.render('code/embed', data);
+  } else {
+    res.redirect('/');
+  }
+});
+
 app.route('/:lang')
    .get((req, res) => {
      const lang = supportedLanguages.filter((lang) => lang.href === req.params.lang);
@@ -76,9 +87,11 @@ app.route('/:lang')
    })
    .post((req, res) => {
      const lang = supportedLanguages.filter((lang) => lang.href === req.params.lang);
-     if(lang.length === 1 && req.body.source) {
+     if(lang.length === 1 && req.body.action) {
        const data = lang[0];
-       fs.writeFileSync(`data/${data.href}/${data.example_src_file}`, req.body.source);
+       if(req.body.action === 'save' && req.body.source) {
+         fs.writeFileSync(`data/${data.href}/${data.example_src_file}`, req.body.source);
+       }
        res.json({success: true});
      } else {
        res.json({success: false});
