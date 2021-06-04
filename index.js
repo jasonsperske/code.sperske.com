@@ -8,6 +8,12 @@ const supportedLanguages = [{
   href: 'js',
   label: 'JavaScript',
   example_src_file: 'example.js',
+  actions: [
+    {
+      jsFunction: 'RunJS',
+      label: '➤Run'
+    }
+  ],
   ace: {
     mode: 'javascript'
   }
@@ -16,6 +22,16 @@ const supportedLanguages = [{
   href: 'java',
   label: 'Java',
   example_src_file: 'Example.java',
+  actions: [
+    {
+      jsFunction: 'CompileJava',
+      label: 'Build'
+    },
+    {
+      jsFunction: 'RunJava',
+      label: '➤Run'
+    }
+  ],
   ace: {
     mode: 'java'
   }
@@ -24,6 +40,12 @@ const supportedLanguages = [{
   href: 'py',
   label: 'Python',
   example_src_file: 'example.py',
+  actions: [
+    {
+      jsFunction: 'RunPython',
+      label: '➤Run'
+    }
+  ],
   ace: {
     mode: 'python'
   }

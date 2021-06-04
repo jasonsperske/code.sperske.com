@@ -2,7 +2,9 @@
   <div class="container-fluid">
     <a class="navbar-brand" href="#"><%=label%></a>
     <form class="d-flex">
-      <button class="btn btn-outline-success" type="submit">Run</button>
+      <%actions.forEach((action) => {%>
+        <button data-action="<%=action.jsFunction%>" class="btn btn-outline-success" type="submit"><%=action.label%></button>
+      <%})%>
     </form>
   </div>
 </nav>
