@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
 const path = require('path');
 const fs = require('fs');
 const port = process.env.port || 3000;
@@ -54,6 +55,7 @@ const supportedLanguages = [{
 app.set('view engine', 'ejs');
 app.use(require('express-ejs-layouts'));
 app.use('/static', express.static('static'));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/', (req, res) => {
   res.render('index', {
@@ -70,6 +72,16 @@ app.route('/:lang')
        res.render('code', data);
      } else {
        res.redirect('/');
+     }
+   })
+   .post((req, res) => {
+     const lang = supportedLanguages.filter((lang) => lang.href === req.params.lang);
+     if(lang.length === 1 && req.body.source) {
+       const data = lang[0];
+       fs.writeFileSync(`data/${data.href}/${data.example_src_file}`, req.body.source);
+       res.json({success: true});
+     } else {
+       res.json({success: false});
      }
    });
 
