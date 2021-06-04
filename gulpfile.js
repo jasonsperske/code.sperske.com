@@ -14,6 +14,8 @@ function javascript() {
       'node_modules/bootstrap/dist/js/bootstrap.js',
       'node_modules/ace-builds/src/ace.js',
       'node_modules/ace-builds/src/mode-javascript.js',
+      'node_modules/ace-builds/src/mode-java.js',
+      'node_modules/ace-builds/src/mode-python.js',
       'src/js/index.js'
     ], { base: '.'})
     .pipe(babel())

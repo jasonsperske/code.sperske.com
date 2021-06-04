@@ -8,7 +8,7 @@
 </nav>
 <div class="row">
   <div class="col">
-    <div id="editor"></div>
+    <div id="editor"><%- editor_source -%></div>
   </div>
   <div class="col">
     <pre id="output"></pre>
@@ -16,5 +16,5 @@
 </div>
 <script type="text/javascript">
   const editor = ace.edit('editor');
-  editor.session.setMode('ace/mode/javascript');
+  editor.session.setMode('ace/mode/<%=ace.mode%>');
 </script>

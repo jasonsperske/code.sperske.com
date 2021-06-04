@@ -1,18 +1,32 @@
 const express = require('express');
 const app = express();
+const path = require('path');
+const fs = require('fs');
 const port = process.env.port || 3000;
 
 const supportedLanguages = [{
   href: 'js',
-  label: 'JavaScript'
+  label: 'JavaScript',
+  example_src_file: 'example.js',
+  ace: {
+    mode: 'javascript'
+  }
 },
 {
   href: 'java',
-  label: 'Java'
+  label: 'Java',
+  example_src_file: 'Example.java',
+  ace: {
+    mode: 'java'
+  }
 },
 {
   href: 'py',
-  label: 'Python'
+  label: 'Python',
+  example_src_file: 'example.py',
+  ace: {
+    mode: 'python'
+  }
 }];
 
 app.set('view engine', 'ejs');
@@ -29,7 +43,9 @@ app.route('/:lang')
    .get((req, res) => {
      const lang = supportedLanguages.filter((lang) => lang.href === req.params.lang);
      if(lang.length === 1) {
-       res.render('code', lang[0]);
+       const data = lang[0];
+       data.editor_source = fs.readFileSync(`data/${data.href}/${data.example_src_file}`);
+       res.render('code', data);
      } else {
        res.redirect('/');
      }
