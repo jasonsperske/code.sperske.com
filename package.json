@@ -1,7 +1,7 @@
 {
-  "name": "code.sperske.com",
+  "name": "PicoIDE",
   "version": "1.0.0",
-  "description": "A simple way to code and share code with people I am interviewing with",
+  "description": "A simple web based IDE designed to run on Raspberry Pi computers to enable Chromebooks and iPads to work a full development envrionments.",
   "main": "index.js",
   "scripts": {
     "build": "node ./node_modules/gulp-cli/bin/gulp.js",
@@ -11,10 +11,8 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "@popperjs/core": "^2.9.2",
     "ace-builds": "^1.4.12",
     "body-parser": "^1.19.0",
-    "bootstrap": "^5.0.1",
     "child_process": "^1.0.2",
     "ejs": "^3.1.6",
     "express": "^4.17.1",

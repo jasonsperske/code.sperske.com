@@ -1,12 +1,64 @@
-@import "../../node_modules/bootstrap/scss/bootstrap.scss";
-#editor {
-  height: 90vh;
-}
-#output {
-  border-left: 1px solid #aaa;
-  height: 90vh;
-  width: 100%;
+body {
+  height: 100vh;
+  margin: 0;
 }
 pre.error {
   color: #dc3545;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 60px 1fr 45px;
+  gap: 0px 0px;
+  grid-template-areas:
+    "nav"
+    "content"
+    "footer";
+  height: 100vh;
+}
+
+.nav {
+  grid-area: nav;
+}
+
+.footer {
+  grid-area: footer;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  grid-template-rows: 1fr;
+  gap: 0px 0px;
+  grid-template-areas: "tree code_pane";
+  grid-area: content;
+}
+
+.tree {
+  grid-area: tree;
+  border-right: 1px solid #aaa;
+}
+.ace_editor {
+  height: 100%;
+}
+.code_pane {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 200px;
+  gap: 0px 0px;
+  grid-area: code_pane;
+}
+
+.code {
+  // grid-area: 1 / 1 / 3 / 2;
+}
+
+.output {
+  grid-area: 2 / 1 / 3 / 2;
+}
+#output {
+  width: 100%;
+  height: 100%;
+  border: none;
 }

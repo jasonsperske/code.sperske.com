@@ -10,8 +10,6 @@ const rename = require('gulp-rename');
 function javascript() {
   return gulp.src([
       'node_modules/jquery/dist/jquery.js',
-      'node_modules/@popperjs/core/dist/umd/popper.js',
-      'node_modules/bootstrap/dist/js/bootstrap.js',
       'node_modules/ace-builds/src/ace.js',
       'node_modules/ace-builds/src/mode-javascript.js',
       'node_modules/ace-builds/src/mode-java.js',
