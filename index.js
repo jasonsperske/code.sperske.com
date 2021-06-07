@@ -116,7 +116,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/project/:project', (req, res) => {
-  const project = tree.children.filter((d) => d.name === 'DataTypes').shift();
+  const project = tree.children.filter((d) => d.name === req.params.project).shift();
   if (!project) {
     res.redirect('/');
     return;
@@ -129,7 +129,7 @@ app.get('/project/:project', (req, res) => {
 });
 
 app.get('/project/:project/source/*', (req, res) => {
-  const project = tree.children.filter((d) => d.name === 'DataTypes').shift();
+  const project = tree.children.filter((d) => d.name === req.params.project).shift();
   if (!project) {
     res.redirect('/');
     return;
