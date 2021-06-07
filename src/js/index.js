@@ -26,11 +26,6 @@ function initIDE(project) {
       .setProperty('--tree-side-width', width + 'px');
   }
 
-  function endResizeContentSeperator() {
-    window.removeEventListener('mousemove', resizeContentSeperator);
-    window.removeEventListener('mouseup', endResizeContentSeperator);
-  }
-
   function resizeOutputSeperator(e) {
     let height = window.innerHeight - e.clientY;
     if (height < 100) {
@@ -42,19 +37,20 @@ function initIDE(project) {
       .setProperty('--output-side-height', height + 'px');
   }
 
-  function endResizeOutputSeperator() {
+  function endResizerSeperator() {
+    window.removeEventListener('mousemove', resizeContentSeperator);
     window.removeEventListener('mousemove', resizeOutputSeperator);
-    window.removeEventListener('mouseup', endResizeOutputSeperator);
+    window.removeEventListener('mouseup', endResizerSeperator);
   }
 
   document.getElementsByClassName('content_seperator')[0].onmousedown = () => {
     window.addEventListener('mousemove', resizeContentSeperator);
-    window.addEventListener('mouseup', endResizeContentSeperator);
+    window.addEventListener('mouseup', endResizerSeperator);
   };
 
   document.getElementsByClassName('code_pane_seperator')[0].onmousedown = () => {
     window.addEventListener('mousemove', resizeOutputSeperator);
-    window.addEventListener('mouseup', endResizeOutputSeperator);
+    window.addEventListener('mouseup', endResizerSeperator);
   };
 
   editor.session.setMode('ace/mode/text');
