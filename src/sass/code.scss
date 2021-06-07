@@ -1,3 +1,6 @@
+$border-color: #aaa;
+$handle-color: #ddd;
+
 :root {
   --tree-side-width: 200px;
   --output-side-height: 200px;
@@ -37,12 +40,12 @@ pre.error {
 
 .nav {
   grid-area: nav;
-  border-bottom: 1px solid #aaa;
+  border-bottom: 1px solid $border-color;
 }
 
 .footer {
   grid-area: footer;
-  border-top: 1px solid #aaa;
+  border-top: 1px solid $border-color;
 }
 
 .content {
@@ -60,9 +63,9 @@ pre.error {
 
 .content_seperator {
   grid-area: content_seperator;
-  border-left: 1px solid #aaa;
-  background-color: #ddd;
-  border-right: 1px solid #aaa;
+  border-left: 1px solid $border-color;
+  background-color: $handle-color;
+  border-right: 1px solid $border-color;
   &:hover {
     cursor: col-resize;
   }
@@ -71,13 +74,34 @@ pre.error {
 .code_pane {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr 4px var(--output-side-height);
+  grid-template-rows: 20px 1fr 4px var(--output-side-height);
   gap: 0px 0px;
   grid-area: code_pane;
   grid-template-areas:
+    "code_tabs"
     "code"
     "code_pane_seperator"
     "output";
+}
+
+.code_tabs {
+  grid-area: code_tabs;
+  border-bottom: 1px solid $border-color;
+  ul {
+    margin: 0;
+    li {
+      display: inline;
+      line-height: 21px;
+      padding: 0 2ch;
+      border-top: 1px solid #666;
+      border-left: 1px solid #666;
+      border-right: 1px solid #666;
+      border-radius: 4px 4px 0 0;
+      &.active {
+        background-color: $handle-color;
+      }
+    }
+  }
 }
 
 .code {
@@ -86,9 +110,9 @@ pre.error {
 
 .code_pane_seperator {
   grid-area: code_pane_seperator;
-  border-top: 1px solid #aaa;
-  background-color: #ddd;
-  border-bottom: 1px solid #aaa;
+  border-top: 1px solid $border-color;
+  background-color: $handle-color;
+  border-bottom: 1px solid $border-color;
   &:hover {
     cursor: row-resize;
   }

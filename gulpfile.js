@@ -42,8 +42,8 @@ function javascript_lang_py() {
 
 function ace_resources() {
   return gulp.src([
-    'node_modules/ace-builds/src/worker-*.js',
-    'node_modules/ace-builds/src/mode-*.js',
+    'node_modules/ace-builds/src-min-noconflict/worker-*.js',
+    'node_modules/ace-builds/src-min-noconflict/mode-*.js',
   ], {base: './'})
   .pipe(flatten())
   .pipe(gulp.dest('static/js/ace'));
