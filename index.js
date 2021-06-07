@@ -1,10 +1,11 @@
+const config = require('config');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
 const fs = require('fs');
 const exec = require('child_process').exec
-const port = process.env.port || 3000;
+const port = process.env.port || config.get('port') || 3000;
 
 const supportedLanguages = [{
   href: 'js',
@@ -12,7 +13,7 @@ const supportedLanguages = [{
   example_src_file: 'example.js',
   actions: [
     {
-      jsFunction: 'RunJS',
+      jsFunction: 'embed',
       label: '➤Run'
     }
   ],
@@ -28,11 +29,11 @@ const supportedLanguages = [{
   compile: "javac data/java/Example.java & echo Done!",
   actions: [
     {
-      jsFunction: 'CompileJava',
+      jsFunction: 'compile',
       label: 'Build'
     },
     {
-      jsFunction: 'RunJava',
+      jsFunction: 'execute',
       label: '➤Run'
     }
   ],
@@ -47,7 +48,7 @@ const supportedLanguages = [{
   execute: "python data/py/example.py",
   actions: [
     {
-      jsFunction: 'RunPython',
+      jsFunction: 'execute',
       label: '➤Run'
     }
   ],
