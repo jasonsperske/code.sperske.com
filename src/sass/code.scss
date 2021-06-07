@@ -1,3 +1,7 @@
+:root {
+  --tree-side-width: 200px;
+  --output-side-height: 200px;
+}
 body {
   font-family: sans-serif;
   height: 100vh;
@@ -33,6 +37,7 @@ pre.error {
 
 .nav {
   grid-area: nav;
+  border-bottom: 1px solid #aaa;
 }
 
 .footer {
@@ -42,7 +47,7 @@ pre.error {
 
 .content {
   display: grid;
-  grid-template-columns: 200px 4px 1fr;
+  grid-template-columns: var(--tree-side-width) 4px 1fr;
   grid-template-rows: 1fr;
   gap: 0px 0px;
   grid-template-areas: "tree content_seperator code_pane";
@@ -66,7 +71,7 @@ pre.error {
 .code_pane {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr 4px 200px;
+  grid-template-rows: 1fr 4px var(--output-side-height);
   gap: 0px 0px;
   grid-area: code_pane;
   grid-template-areas:

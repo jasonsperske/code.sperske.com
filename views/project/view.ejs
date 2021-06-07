@@ -37,18 +37,4 @@
     </div>
   </div>
 </div>
-<script type="text/javascript">
-  const editor = ace.edit('editor');
-  const tree = [...document.getElementsByClassName("tree")].shift();
-  tree.addEventListener('click', (e) => {
-    if (e.target.nodeName === 'LI' && e.target.dataset.sourcePath) {
-      fetch('/project/<%=project.name%>/source/'+e.target.dataset.sourcePath)
-        .then(res => res.json())
-        .then((data) => {
-          editor.session.setValue(data.source);
-          editor.session.setMode('ace/mode/' + data.type.ace.mode);
-        });
-    }
-  }, false);
-  editor.session.setMode('ace/mode/text');
-</script>
+<script type="text/javascript">initIDE("<%=project.name%>");</script>
