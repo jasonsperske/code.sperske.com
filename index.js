@@ -1,11 +1,56 @@
 const config = require('config');
+const dirTree = require("directory-tree");
 const express = require('express');
-const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
 const fs = require('fs');
 const exec = require('child_process').exec
+
+const workspace = fs.realpathSync(config.get('workspace') || '.');
 const port = process.env.port || config.get('port') || 3000;
+
+console.log('Setting up pico-IDE:');
+console.log(`          workspace: ${workspace}`);
+console.log(`    serving on port: ${port}`);
+
+const app = express();
+const tree = dirTree(workspace);
+
+const supportedFileTypes = {
+  'java': {
+    ace: {
+      mode: "java"
+    }
+  },
+  'js': {
+    ace: {
+      mode: "javascript"
+    }
+  },
+  'json': {
+    ace: {
+      mode: "javascript"
+    }
+  },
+  'py': {
+    ace: {
+      mode: "python"
+    }
+  }
+};
+
+function findFileType(filename) {
+  const file_ext = filename.substring(filename.lastIndexOf('.') + 1);
+  const file_type = supportedFileTypes[file_ext];
+  if (file_type) {
+    return file_type;
+  }
+  return {
+    ace: {
+      mode: "text"
+    }
+  };
+}
 
 const supportedLanguages = [{
   href: 'js',
@@ -64,7 +109,38 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/', (req, res) => {
   res.render('index', {
-    languages: supportedLanguages
+    projects: tree.children
+      .filter((d) => d.type === 'directory' && !d.name.startsWith('.'))
+      .map((d) => d.name)
+  });
+});
+
+app.get('/project/:project', (req, res) => {
+  const project = tree.children.filter((d) => d.name === 'DataTypes').shift();
+  if (!project) {
+    res.redirect('/');
+    return;
+  }
+
+  res.render('project/view', {
+    project,
+    title: project.name
+  });
+});
+
+app.get('/project/:project/source/*', (req, res) => {
+  const project = tree.children.filter((d) => d.name === 'DataTypes').shift();
+  if (!project) {
+    res.redirect('/');
+    return;
+  }
+  const source_path = path.join(workspace, project.name, req.params[0]);
+  const source_type = findFileType(req.params[0]);
+  const source = Buffer.from(fs.readFileSync(source_path));
+
+  res.json({
+    source: source.toString('utf8'),
+    type: source_type
   });
 });
 

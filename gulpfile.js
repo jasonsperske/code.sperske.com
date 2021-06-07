@@ -10,9 +10,6 @@ const rename = require('gulp-rename');
 function javascript() {
   return gulp.src([
       'node_modules/ace-builds/src/ace.js',
-      'node_modules/ace-builds/src/mode-javascript.js',
-      'node_modules/ace-builds/src/mode-java.js',
-      'node_modules/ace-builds/src/mode-python.js',
       'src/js/index.js'
     ], { base: '.'})
     .pipe(babel())
@@ -45,7 +42,8 @@ function javascript_lang_py() {
 
 function ace_resources() {
   return gulp.src([
-    'node_modules/ace-builds/src/worker-*.js'
+    'node_modules/ace-builds/src/worker-*.js',
+    'node_modules/ace-builds/src/mode-*.js',
   ], {base: './'})
   .pipe(flatten())
   .pipe(gulp.dest('static/js/ace'));

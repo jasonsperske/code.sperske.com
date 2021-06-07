@@ -3,7 +3,12 @@
   <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Code With Me</title>
+    <title>
+      <% if (locals.title) { %>
+        <%=title%> -
+      <% } %>
+        Pico IDE
+    </title>
     <meta name="project-src" content="https://github.com/jasonsperske/code.sperske.com"/>
     <script type="text/javascript" src="/static/js/code.min.js"></script>
     <link rel="stylesheet" href="/static/css/code.min.css" type="text/css" media="screen"/>
