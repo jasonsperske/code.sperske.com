@@ -1,59 +1,71 @@
 // Setup ACE editor
 ace.config.set("basePath", "/static/js/ace");
 
-function initIDE(project) {
-  const editor = ace.edit('editor');
-  const tree = [...document.getElementsByClassName("tree")].shift();
-  tree.addEventListener('click', (e) => {
-    if (e.target.nodeName === 'LI' && e.target.dataset.sourcePath) {
-      fetch(`/project/${project}/source/${e.target.dataset.sourcePath}`)
-        .then(res => res.json())
-        .then((data) => {
-          editor.session.setValue(data.source);
-          editor.session.setMode('ace/mode/' + data.type.ace.mode);
-        });
-    }
-  }, false);
+class IDE {
+  constructor(project) {
+    this._editor = ace.edit('editor');
+    this._editor.session.setMode('ace/mode/text');
+    this._project = project;
+    this._tree = [...document.getElementsByClassName('tree')].shift();
 
-  function resizeContentSeperator(e) {
-    let width = e.clientX;
-    if (width < 100) {
-      width = 100;
-    }
+    this._footer_height = document.getElementsByClassName('footer')[0].offsetHeight;
+
+    this._tree.addEventListener('click', (e) => {
+      if (e.target.nodeName === 'LI' && e.target.dataset.sourcePath) {
+        this._loadFile(e.target.dataset.sourcePath);
+      }
+    }, false);
+
+    document.getElementById('content_seperator').onmousedown = () => {
+      window.addEventListener('mousemove', this._resizeContentSeperator.bind(this));
+
+      window.addEventListener('mouseup', this._onResizeEnd.bind(this));
+      window.addEventListener('selectstart', this._disableSelect.bind(this));
+    };
+
+    document.getElementById('code_pane_seperator').onmousedown = () => {
+      window.addEventListener('mousemove', this._resizeOutputSeperator.bind(this));
+
+      window.addEventListener('mouseup', this._onResizeEnd.bind(this));
+      window.addEventListener('selectstart', this._disableSelect.bind(this));
+    };
+  }
+
+  _loadFile(resource) {
+    fetch(`/project/${this._project}/source/${resource}`)
+      .then(res => res.json())
+      .then((data) => {
+        this._editor.session.setValue(data.source);
+        this._editor.session.setMode('ace/mode/' + data.type.ace.mode);
+      });
+  }
+
+  _disableSelect(e) {
+    e.preventDefault();
+  }
+
+  _resizeContentSeperator(e) {
+    const width = Math.max(e.clientX, 100);
     document
       .documentElement
       .style
       .setProperty('--tree-side-width', width + 'px');
   }
 
-  function resizeOutputSeperator(e) {
-    let height = window.innerHeight - e.clientY;
-    if (height < 100) {
-      height = 100;
-    }
+  _resizeOutputSeperator(e) {
+    const height = Math.max((window.innerHeight - this._footer_height) - e.clientY, 100);
     document
       .documentElement
       .style
       .setProperty('--output-side-height', height + 'px');
   }
 
-  function endResizerSeperator() {
-    window.removeEventListener('mousemove', resizeContentSeperator);
-    window.removeEventListener('mousemove', resizeOutputSeperator);
-    window.removeEventListener('mouseup', endResizerSeperator);
+  _onResizeEnd() {
+    window.removeEventListener('mousemove', this._resizeContentSeperator);
+    window.removeEventListener('mousemove', this._resizeOutputSeperator);
+    window.removeEventListener('selectstart', this._disableSelect);
+    window.removeEventListener('mouseup', this._onResizeEnd);
   }
-
-  document.getElementsByClassName('content_seperator')[0].onmousedown = () => {
-    window.addEventListener('mousemove', resizeContentSeperator);
-    window.addEventListener('mouseup', endResizerSeperator);
-  };
-
-  document.getElementsByClassName('code_pane_seperator')[0].onmousedown = () => {
-    window.addEventListener('mousemove', resizeOutputSeperator);
-    window.addEventListener('mouseup', endResizerSeperator);
-  };
-
-  editor.session.setMode('ace/mode/text');
 }
 
 // Standard way to save and update a src editor

@@ -61,7 +61,7 @@ pre.error {
   grid-area: tree;
 }
 
-.content_seperator {
+#content_seperator {
   grid-area: content_seperator;
   border-left: 1px solid $border-color;
   background-color: $handle-color;
@@ -108,7 +108,7 @@ pre.error {
   grid-area: code;
 }
 
-.code_pane_seperator {
+#code_pane_seperator {
   grid-area: code_pane_seperator;
   border-top: 1px solid $border-color;
   background-color: $handle-color;
