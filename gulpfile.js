@@ -10,6 +10,7 @@ const rename = require('gulp-rename');
 function javascript() {
   return gulp.src([
       'node_modules/ace-builds/src/ace.js',
+      'src/js/pane_resizer.js',
       'src/js/index.js'
     ], { base: '.'})
     .pipe(babel())

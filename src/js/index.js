@@ -16,19 +16,23 @@ class IDE {
       }
     }, false);
 
-    document.getElementById('content_seperator').onmousedown = () => {
-      window.addEventListener('mousemove', this._resizeContentSeperator.bind(this));
+    new PaneResizer(document.getElementById('content_seperator'),
+      (e) => Math.max(e.clientX, 100),
+      (width) => {
+        document
+          .documentElement
+          .style
+          .setProperty('--tree-side-width', `${width}px`);
+      });
 
-      window.addEventListener('mouseup', this._onResizeEnd.bind(this));
-      window.addEventListener('selectstart', this._disableSelect.bind(this));
-    };
-
-    document.getElementById('code_pane_seperator').onmousedown = () => {
-      window.addEventListener('mousemove', this._resizeOutputSeperator.bind(this));
-
-      window.addEventListener('mouseup', this._onResizeEnd.bind(this));
-      window.addEventListener('selectstart', this._disableSelect.bind(this));
-    };
+    new PaneResizer(document.getElementById('code_pane_seperator'),
+      (e) => Math.max((window.innerHeight - this._footer_height) - e.clientY, 100),
+      (height) => {
+        document
+          .documentElement
+          .style
+          .setProperty('--output-side-height', `${height}px`);
+      });
   }
 
   _loadFile(resource) {
@@ -38,33 +42,6 @@ class IDE {
         this._editor.session.setValue(data.source);
         this._editor.session.setMode('ace/mode/' + data.type.ace.mode);
       });
-  }
-
-  _disableSelect(e) {
-    e.preventDefault();
-  }
-
-  _resizeContentSeperator(e) {
-    const width = Math.max(e.clientX, 100);
-    document
-      .documentElement
-      .style
-      .setProperty('--tree-side-width', width + 'px');
-  }
-
-  _resizeOutputSeperator(e) {
-    const height = Math.max((window.innerHeight - this._footer_height) - e.clientY, 100);
-    document
-      .documentElement
-      .style
-      .setProperty('--output-side-height', height + 'px');
-  }
-
-  _onResizeEnd() {
-    window.removeEventListener('mousemove', this._resizeContentSeperator);
-    window.removeEventListener('mousemove', this._resizeOutputSeperator);
-    window.removeEventListener('selectstart', this._disableSelect);
-    window.removeEventListener('mouseup', this._onResizeEnd);
   }
 }
 
