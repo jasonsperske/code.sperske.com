@@ -1,9 +1,12 @@
-<table>
-  <tbody>
-  <%projects.forEach((project) => {%>
-    <tr>
-      <td><a href='project/<%=project%>'><%=project%></a></td>
-    </tr>
-  <%})%>
-  </tbody>
-</table>
+<div class="middle">
+  <table>
+    <caption>Projects</caption>
+    <tbody>
+    <%projects.forEach((project) => {%>
+      <tr>
+        <td><a href='project/<%=project%>'><%=project%></a></td>
+      </tr>
+    <%})%>
+    </tbody>
+  </table>
+</div>

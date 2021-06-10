@@ -1,18 +1,30 @@
 $border-color: #aaa;
 $handle-color: #ddd;
+$pane-handle-size: 4px;
 
 :root {
   --tree-side-width: 200px;
-  --output-side-height: 200px;
+  --output-side-height: 0;
 }
+
 body {
-  font-family: sans-serif;
+  font-family: system-ui, sans-serif;
   height: 100vh;
   margin: 0;
 }
+
+div.middle {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+}
+
 pre.error {
   color: #dc3545;
 }
+
 .tree {
   ul {
     list-style: none;
@@ -50,7 +62,7 @@ pre.error {
 
 .content {
   display: grid;
-  grid-template-columns: var(--tree-side-width) 4px 1fr;
+  grid-template-columns: var(--tree-side-width) $pane-handle-size 1fr;
   grid-template-rows: 1fr;
   gap: 0px 0px;
   grid-template-areas: "tree content_seperator code_pane";
@@ -74,7 +86,7 @@ pre.error {
 .code_pane {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 20px 1fr 4px var(--output-side-height);
+  grid-template-rows: 1.3em 1fr $pane-handle-size var(--output-side-height);
   gap: 0px 0px;
   grid-area: code_pane;
   grid-template-areas:
