@@ -19,28 +19,6 @@ function javascript() {
     .pipe(gulp.dest('static/js/'));
 }
 
-function javascript_lang_common(lang) {
-  return gulp.src([
-      `src/js/lang/${lang}.js`
-    ], { base: '.'})
-    .pipe(babel())
-    .pipe(terser())
-    .pipe(concat(`${lang}.min.js`))
-    .pipe(gulp.dest('static/js/lang/'));
-}
-
-function javascript_lang_java() {
-  return javascript_lang_common('java');
-}
-
-function javascript_lang_js() {
-  return javascript_lang_common('js');
-}
-
-function javascript_lang_py() {
-  return javascript_lang_common('py');
-}
-
 function ace_resources() {
   return gulp.src([
     'node_modules/ace-builds/src-min-noconflict/worker-*.js',
@@ -60,8 +38,5 @@ function css() {
 
 exports.default = gulp.series(
   javascript,
-  javascript_lang_java,
-  javascript_lang_js,
-  javascript_lang_py,
   ace_resources,
   css);

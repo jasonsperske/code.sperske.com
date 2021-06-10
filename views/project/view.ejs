@@ -1,6 +1,7 @@
 <div class="grid-container">
   <div class="nav">
     <%=project.name%>
+    <button data-action='save'>Save</button>
   </div>
   <div class="footer"></div>
   <div class="content">
@@ -31,7 +32,20 @@
     </div>
     <div id="content_seperator"></div>
     <div class="code_pane">
-      <div class="code_tabs"><ul id='tabs'><li class="active">Example.java</li><li>example.py</li></ul></div>
+      <div class="code_tabs">
+        <ul id='tabs'>
+          <li>example1.py</li>
+          <li>example2.py</li>
+          <li class="active">Example.java</li>
+          <li>example3.py</li>
+          <li>example4.py</li>
+          <li>example5.py</li>
+          <li>example6.py</li>
+          <li>example7.py</li>
+          <li>example8.py</li>
+          <li>example9.py</li>
+        </ul>
+      </div>
       <div class="code"><div id="editor"></div></div>
       <div id="code_pane_seperator"></div>
       <div class="output"></div>
