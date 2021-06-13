@@ -52,6 +52,8 @@ pre.error {
 
 .nav {
   grid-area: nav;
+  padding-left: 10px;
+  line-height: 26px;
   border-bottom: 1px solid $border-color;
 }
 
