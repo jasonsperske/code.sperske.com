@@ -7,6 +7,8 @@ const flatten = require('gulp-flatten');
 const concat = require('gulp-concat');
 const rename = require('gulp-rename');
 
+sass.compiler = require('sass');
+
 function javascript() {
   return gulp.src([
       'node_modules/ace-builds/src/ace.js',
